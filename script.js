@@ -1,32 +1,34 @@
-// Lets verify that the script loads
-console.log("Vi kommer åt scriptet");
-
 // global variables
-//let candies = 
+// TODO: Add all twelve images to candies
+let candies = ["./images/1.jpeg", "./images/2.jpeg", "./images/3.jpeg", "./images/4.jpeg" ];
+let candiesShow;
 
-loadData();
-// Load content to FrontEnd, read all files in folder "images/" and populate something
+initContent(); 
 
-function loadData(){
-
-    const imgFolder = './images/';
-    const fs = require('fs');
-
-    fs.readdir(imgFolder, (err, files) => {
-        files.forEach(file => {
-            console.log(file);
-        });
-    });
+// Have a function to load all content
+function initContent(){
+    candiesShow = '<div id="content">';  
+    loadContent(); 
+    candiesShow = candiesShow + '</div>';
+    // TODO: remove logging when getting further
+    console.log(candiesShow);
+    document.getElementById("content").innerHTML = candiesShow;
 }
 
 
-/*
-const folder = process.argv.slice(2)[0];
-const fs = require('fs');
-
-fs.readdirSync(folder).forEach(file => {
-    console.log(file);
-})
-*/
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+// Supporting function to create HTML for InitContent()
+function loadContent(){ for (const candy of candies) { candiesShow = candiesShow + '<p><img src="' + candy + '" alt="Lägg till en text dynamiskt"></p>'; } }
