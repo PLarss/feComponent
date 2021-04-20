@@ -5,30 +5,35 @@ let candiesShow;
 
 initContent(); 
 
-// Have a function to load all content
-function initContent(){
-    candiesShow = '<div id="content">';  
-    loadContent(); 
-    candiesShow = candiesShow + '</div>';
-    // TODO: remove logging when getting further
-    console.log(candiesShow);
-    document.getElementById("content").innerHTML = candiesShow;
+// Create code
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Have a function to load all content // TODO: remove logging when getting further
+function initContent(){ candiesShow = '<div id="content">'; loadContent(); candiesShow = candiesShow + '</div>'; console.log(candiesShow); document.getElementById("content").innerHTML = candiesShow;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Supporting function to create HTML for InitContent()
 function loadContent(){ for (const candy of candies) { candiesShow = candiesShow + '<p><img src="' + candy + '" alt="Lägg till en text dynamiskt"></p>'; } }
