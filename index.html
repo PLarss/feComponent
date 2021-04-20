@@ -5,22 +5,100 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-areas:
+                'header header header header'
+                'main main main menu'
+                'footer footer footer footer';
+            grid-gap: 10px;
+            background-color: white;
+            padding: 10px;
+        }
+
+        .grid-container>div {
+            background-color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            padding: 20px 0;
+            font-size: 30px;
+        }
+        .header {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 40px;
+            font-weight: 200;
+            text-align: center;
+            color: white;
+            background-color: black;
+        }
+        .nav{
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            text-align: left;
+            padding-left: 50px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            color: white;
+            background-color: darkgray;
+
+        }
+    </style>
 </head>
-<body>
-    <h1>Index</h1>
+<body class="full-witdh">
+            <!--
+        .grid-container {
+            grid-template-columns: auto auto auto auto;
+            display: grid;
+            position: left;
+        }-->
+    <!--
+        url for front end inspo: 
+        https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Document_and_website_structure
 
-    <div id="content">      
-    </div>
+    -->
 
-<!--
-    from javascript: 
-    <div id="content">
-        <p><img src="./images/1.jpeg" alt="Lägg till en text dynamiskt"></p>
-        <p><img src="./images/2.jpeg" alt="Lägg till en text dynamiskt"></p>
-        <p><img src="./images/3.jpeg" alt="Lägg till en text dynamiskt"></p>
-        <p><img src="./images/4.jpeg" alt="Lägg till en text dynamiskt"></p>
+        <div class="grid-container">
+            <!-- HEADER OCH MENY-->
+            <div style="grid-area: header">
+                <header>
+                    <div class="header">Smågodisbutiken</div>
+                </header>
+                <nav class="nav">
+                    <div class="nav">
+                        <span class="nav"><a >Home</a><span>
+                        <span class="nav">Something else</a></span>
+                    </div>
+                </nav>
+            </div>
+            <div style="grid-area: menu" class="shoppingbag">
+                <div class="shoppingbag"> 
+                    <div class="grid-container" id="shoppingbag">
+                        <p> add items here: </p>
+                        <div class="grid-item"><img onclick="add('./images/1.jpeg')" src="./images/1.jpeg" alt="./images/1.jpeg"></div>      
+                    </div> 
+                </div>
+            </div>
+            <div style="grid-area: main">
+                <div class="grid-container" id="content">      
+                </div>    
+            </div>
+            <div style="grid-area: footer">
+                <footer>
+                    <p> A footer to be shown everywhere! </p>
+                </footer>
+            </div>
+        </div>
+
+    <!-- 
+    FRÅN JS:
+    <div class="grid-container" id="content">
+        <div class="grid-item"><img onclick="add()" src="./images/1.jpeg" alt="Lägg till en text dynamiskt"></div>
+        <div class="grid-item"><img src="./images/2.jpeg" alt="Lägg till en text dynamiskt"><span>Om jag lägger till en text här, så hamnar den inte under bilden.</span> </div>
+        <div class="grid-item"><img src="./images/3.jpeg" alt="Lägg till en text dynamiskt"></div>
+        <div class="grid-item"><img src="./images/4.jpeg" alt="Lägg till en text dynamiskt"></div>
+        <div class="grid-container" id="content"><div class="grid-item"><img  onclick="add('./images/1.jpeg')" src="./images/1.jpeg" alt="./images/1.jpeg"></div>
     </div>
--->
+    -->
 
     <script src="script.js"></script>
 </body>
