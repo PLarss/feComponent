@@ -3,7 +3,6 @@
 let candies = ["./images/1.jpeg", "./images/2.jpeg", "./images/3.jpeg", "./images/4.jpeg", "./images/5.jpeg", "./images/6.jpeg", "./images/7.jpeg" ];
 let candiesShow;
 let b = []; 
-let totalPrice;
 const basketstart = '<div class="grid-container" id="shoppingbag">'; 
 const basketend = '</div>'
 
@@ -14,6 +13,7 @@ initBasket();
 // TODO: Create a basket function and stuff it to a basket 
 function add(item){
     let totalPrice = 0; 
+    let totalWeight = 0; 
     let basket = "";
     let itemObject = ""; 
     let itemExists = false;
@@ -36,13 +36,14 @@ function add(item){
         // TODO: add - and + for weight
         basket = basket + '<div class="itemInBasket"><img src="'+ b[index].name + '"><br>' + b[index].weight +' gram ' + '</div><br>';        
         totalPrice = totalPrice + ((b[index].price / 100) * b[index].weight);
+        totalWeight = totalWeight + (b[index].weight);
     }
 
     // TODO: WORK ON BASKET HTML! 
-    let priceSummary = '<br><div class="grid-container" id="shoppingbag"><div class="itemInBasket">total price: ' + round(totalPrice) + '</div><br></div>';
-
-    console.log(basketstart + basket + basketend + priceSummary);
-    document.getElementById("shoppingbag").innerHTML = basketstart + basket + basketend + priceSummary;     
+    let weightSummary = '<br><div class="grid-container" id="shoppingbag"><div class="itemInBasket">total weight: ' + totalWeight + '<br>total price: ' + round(totalPrice) + '</div><br></div>'; 
+ 
+    console.log(basketstart + basket + basketend + weightSummary );
+    document.getElementById("shoppingbag").innerHTML = basketstart + basket + basketend + weightSummary;     
 
     // TODO: ADD CHECKOUT BUTTON in basket and in Menu
 }
@@ -50,9 +51,22 @@ function add(item){
 
 // Supporting functions and Init functions! 
 // supporting function for price 
-function round(number) { return +number.toFixed(10); }
+function round(number) { 
+    return +number.toFixed(10); 
+}
 // Have a function to load all content // TODO: remove logging when getting further
-function initContent(){ candiesShow = '<div class="grid-container" id="content">'; loadContent(); candiesShow = candiesShow + '</div>'; console.log(candiesShow); document.getElementById("content").innerHTML = candiesShow; }
-function initBasket(){ let first = basketstart + 'No items in the basket' + basketend; document.getElementById("shoppingbag").innerHTML = first;}
+function initContent(){ 
+    candiesShow = '<div class="grid-container" id="content">'; 
+    loadContent(); 
+    candiesShow = candiesShow + '</div>'; console.log(candiesShow); 
+    document.getElementById("content").innerHTML = candiesShow; 
+}
+function initBasket(){ 
+    let first = basketstart + 'No items in the basket' + basketend; document.getElementById("shoppingbag").innerHTML = first;
+}
 // Supporting function to create HTML for InitContent()
-function loadContent(){ for (const candy of candies) { candiesShow = candiesShow + '<div class="grid-item"><img  onclick="add(\'' + candy + '\')" src="' + candy +'" alt="' + candy + '"></div>'; } }
+function loadContent(){ 
+    for (const candy of candies) { 
+        candiesShow = candiesShow + '<div class="grid-item"><img  onclick="add(\'' + candy + '\')" src="' + candy +'" alt="' + candy + '"></div>'; 
+    } 
+}
