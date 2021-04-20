@@ -1,6 +1,6 @@
 // global variables
 // TODO: Add all twelve images to candies
-let candies = ["./images/1.jpeg", "./images/2.jpeg", "./images/3.jpeg", "./images/4.jpeg", "./images/5.jpeg", "./images/6.jpeg", "./images/7.jpeg" ];
+let candies = ["./images/1.jpeg", "./images/2.jpeg", "./images/3.jpeg", "./images/4.jpeg", "./images/5.jpeg", "./images/6.jpeg", "./images/7.jpeg", "./images/8.jpeg" ];
 let candiesShow;
 let b = []; 
 const basketstart = '<div class="grid-container" id="shoppingbag">'; 
