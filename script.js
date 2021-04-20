@@ -3,6 +3,8 @@
 let candies = ["./images/1.jpeg", "./images/2.jpeg", "./images/3.jpeg", "./images/4.jpeg", "./images/5.jpeg" ];
 let candiesShow;
 let basket; 
+let basketstart = '<div class="grid-container" id="shoppingbag">'; 
+let basketend = '</div>'
 
 initContent(); 
 initBasket();
@@ -12,7 +14,8 @@ initBasket();
 // TODO: Create a basket function
 function add(item){
     basket = basket + item;
-    console.log(basket);    
+    console.log(basket);  
+    document.getElementById("shoppingbag").innerHTML = basketstart + basket + basketend;     
 }
 
 
@@ -39,10 +42,7 @@ function add(item){
 function initContent(){ candiesShow = '<div class="grid-container" id="content">'; loadContent(); candiesShow = candiesShow + '</div>'; console.log(candiesShow); document.getElementById("content").innerHTML = candiesShow;
 }
 
-function initBasket(){
-    basket = '<div class="grid-container" id="shoppingbag">No items in the basket</div>';
-    document.getElementById("shoppingbag").innerHTML = basket;                    
-}
+function initBasket(){ let first = basketstart + 'No items in the basket' + basketend; document.getElementById("shoppingbag").innerHTML = first;}
 // Supporting function to create HTML for InitContent()
 function loadContent(){ for (const candy of candies) { candiesShow = candiesShow + 
     '<div class="grid-item"><img  onclick="add(\'' + candy + '\')" src="' + candy +'" alt="' + candy + '"></div>'
