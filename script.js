@@ -1,51 +1,93 @@
 // global variables
-// TODO: Add all twelve images to candies
-let candies = ["./images/1.jpeg", "./images/2.jpeg", "./images/3.jpeg", "./images/4.jpeg", "./images/5.jpeg", "./images/6.jpeg", "./images/7.jpeg", "./images/8.jpeg" ];
-let candiesShow;
-let b = []; 
-const basketstart = '<div class="grid-container" id="shoppingbag">'; 
-const basketend = '</div>'
 
-initContent(); 
-initBasket();
+let candies = [];
+let basket = []; 
+const numItemsInShop = 12;
+
+// CREATE ARRAY WITH PRODUCTS TO LOAD 
+for (let index = 1; index <= numItemsInShop; index++) {
+    candies.push(`./images/${index}.jpeg`);
+}
+
+document.getElementById("content").innerHTML = initContent(); 
+document.getElementById("shoppingbag").innerHTML = createWeightHTML(basket);
 
 
 // TODO: Create a basket function and stuff it to a basket 
 function add(item){
-    let totalPrice = 0; 
-    let totalWeight = 0; 
-    let basket = "";
-    let itemObject = ""; 
-    let itemExists = false;
-    for (let index = 0; index < b.length; index++) {
-        if(item === b[index].name){
-            itemObject = {name: b[index].name, weight: b[index].weight + 100, price:b[index].price};
-            b[index] = itemObject;
+    // let totalPrice = 0; 
+    //let totalWeight = 0; 
+    // let basketHTML = "";
+    let itemExists = false; 
+
+
+    // OO: Använd gärna "Map" för att skapa en unik samling https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
+     
+    for (let index = 0; index < basket.length; index++) {
+        if(item === basket[index].name){
+            let itemObject = {name: basket[index].name, weight: basket[index].weight + 100, price:basket[index].price};
+            basket[index] = itemObject;
             itemExists = true
         }
     }
     
-    if(itemObject == false){
+    if(itemExists == false){
         // Candy not present in basket object, add it. 
         let itemObject = {name: item, weight: 100, price:9.95};  
-        b.push(itemObject)
+        basket.push(itemObject)
     }
 
-    for (let index = 0; index < b.length; index++) {
+    updateBasket(basket);
+}
 
-        // TODO: add - and + for weight
-        basket = basket + '<div class="itemInBasket"><img src="'+ b[index].name + '"><br>' + b[index].weight +' gram ' + '</div><br>';        
-        totalPrice = totalPrice + ((b[index].price / 100) * b[index].weight);
-        totalWeight = totalWeight + (b[index].weight);
+function updateBasket(basket){
+    const basketstart = '<div class="grid-container" id="shoppingbag">'; 
+    const basketend = '</div>'
+    let b = createBasketHTML(basket); 
+    let w = createWeightHTML(basket);
+    document.getElementById("shoppingbag").innerHTML = basketstart + b + basketend + w;     
+}
+
+function createBasketHTML(basket){
+    let basketHTML = ""; 
+    for (let index = 0; index < basket.length; index++) {
+        basketHTML = basketHTML + '<div class="itemInBasket"><img src="'+ basket[index].name + '"><br>' + createButton("", "-", "changeWeight(\'" + basket[index].name + "\', " + -100 + ")") + '<span> ' + basket[index].weight +' gram </span>' + createButton("btn", "+", "changeWeight(\'" + basket[index].name + "\', " + 100 + ")") + '</div><br>';
     }
+    return basketHTML;
+}
 
-    // TODO: WORK ON BASKET HTML! 
-    let weightSummary = '<br><div class="grid-container" id="shoppingbag"><div class="itemInBasket">total weight: ' + totalWeight + '<br>total price: ' + round(totalPrice) + '</div><br></div>'; 
- 
-    console.log(basketstart + basket + basketend + weightSummary );
-    document.getElementById("shoppingbag").innerHTML = basketstart + basket + basketend + weightSummary;     
+function createWeightHTML(basket){
+    let totalPrice = 0; 
+    let totalWeight = 0; 
+    for (let index = 0; index < basket.length; index++) {
+        totalPrice = totalPrice + ((basket[index].price / 100) * basket[index].weight);
+        totalWeight = totalWeight + (basket[index].weight);
+    }
+    if (totalWeight < 1 ){
+        return '<div class="grid-container" id="shoppingbag">No Items in the basket</div>';
+    } else {
+        return '<br><div class="grid-container" id="shoppingbag"><div class="itemInBasket">total weight: ' + totalWeight + '<br>total price: ' + round(totalPrice) + '</div><br></div>'; 
+    }
+}
 
-    // TODO: ADD CHECKOUT BUTTON in basket and in Menu
+// Create Button
+function createButton(id, text, action){
+    return '<button id="' + id + '" onclick="' + action + '">' + text + '</button>'; 
+}
+
+function changeWeight(name, change) { 
+    for (let index = 0; index < basket.length; index++) {
+        if(name === basket[index].name){
+            if ((basket[index].weight + change) > 0){
+                itemObject = {name: basket[index].name, weight: basket[index].weight + change, price:basket[index].price};
+                basket[index] = itemObject;
+            } else {
+                basket.splice(index);
+            }
+        }
+        // TODO: MOVE ADD HERE? 
+    }
+    updateBasket(basket);
 }
 
 
@@ -53,20 +95,17 @@ function add(item){
 // supporting function for price 
 function round(number) { 
     return +number.toFixed(10); 
-}
+} 
 // Have a function to load all content // TODO: remove logging when getting further
 function initContent(){ 
-    candiesShow = '<div class="grid-container" id="content">'; 
-    loadContent(); 
-    candiesShow = candiesShow + '</div>'; console.log(candiesShow); 
-    document.getElementById("content").innerHTML = candiesShow; 
+    return '<div class="grid-container" id="content">' + loadContent() + '<div>'; 
 }
-function initBasket(){ 
-    let first = basketstart + 'No items in the basket' + basketend; document.getElementById("shoppingbag").innerHTML = first;
-}
+
 // Supporting function to create HTML for InitContent()
 function loadContent(){ 
+    let result = ""; 
     for (const candy of candies) { 
-        candiesShow = candiesShow + '<div class="grid-item"><img  onclick="add(\'' + candy + '\')" src="' + candy +'" alt="' + candy + '"></div>'; 
-    } 
+        result = result + '<div class="grid-item"><img  onclick="add(\'' + candy + '\')" src="' + candy +'" alt="' + candy + '"></div>'; 
+    }
+    return result;     
 }
